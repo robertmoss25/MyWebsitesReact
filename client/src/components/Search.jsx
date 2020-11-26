@@ -1,8 +1,6 @@
-import React, { Component , useState, useEffect} from "react";
-import { Button } from 'react-bootstrap';
+import React, { useState, useEffect} from "react";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
-import history from './../history';
 import "../components/home.css";
 
 let results2 = [];
@@ -16,7 +14,6 @@ function Search() {
   const [url, setURL] = useState("http://localhost:9000/Websites");
 
   const handleSelect=(e)=>{
-      console.log(e);
       setValue(e);
       setURL("http://localhost:9000/Websites/category?key=" + e);
     }
@@ -24,13 +21,10 @@ function Search() {
   
 
   useEffect(() => {
-      //setIsLoaded(false);
-      console.log("url " + url);
       fetch(url)
         .then(res => res.json())
         .then(
           (result) => {  
-            console.log("Loaded");
             setIsLoaded(true);
             setItems(result);
           },
@@ -49,10 +43,8 @@ function Search() {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-          console.log("Here " + isLoaded);
           if (items.categoryArray !== undefined)
           {
-              console.log("Here.. " + isLoaded);
               categories = Object.entries(items.categoryArray).map(([key, value]) => 
               {
                   return <Dropdown.Item eventKey={value}>{value}</Dropdown.Item>
@@ -60,7 +52,6 @@ function Search() {
           }
           
           if (items.array !== undefined) {
-              console.log("array" + JSON.stringify(items.array));
               results2 = (Object.entries(items.array).map(([key, value]) => 
               {
                   return (<tr>
